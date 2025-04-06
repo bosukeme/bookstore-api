@@ -12,6 +12,7 @@ export const getAllAuthors = async (
     res.status(200).json({
       message: 'Authors Retrived Successfully',
       authors: authors,
+      count: authors.length
     });
   } catch (error: any) {
     res.status(500).json({ error: error.message });

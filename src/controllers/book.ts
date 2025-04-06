@@ -2,39 +2,86 @@ import { Request, Response, NextFunction } from 'express';
 
 import Book from '../models/book';
 
+
 export const getAllBooks = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-
     const { title, author, genre, sortBy, sortOrder } = req.query;
 
-    const filter: any = {};
-    if (title) filter.title = { $regex: new RegExp(title as string, 'i') }; 
-    if (author) filter.author = author;
-    if (genre) filter.genre = genre;
+    const matchStage: any = {};
 
-    let sort: any = {};
-    if (sortBy) {
-      const order = sortOrder === 'desc' ? -1 : 1;
-      sort[sortBy as string] = order;
+    if (title) {
+      matchStage.title = { $regex: new RegExp(title as string, 'i') };
     }
 
-    const books = await Book.find(filter)
-      .sort(sort)
-      .populate('author')
-      .populate('genre');
+    const sortStage: any = {};
+    if (sortBy) {
+      const order = sortOrder === 'desc' ? -1 : 1;
+      sortStage[sortBy as string] = order;
+    }
+
+    const pipeline: any[] = [
+      {
+        $lookup: {
+          from: 'authors',
+          localField: 'author',
+          foreignField: '_id',
+          as: 'author',
+        },
+      },
+      {
+        $unwind: '$author',
+      },
+      {
+        $lookup: {
+          from: 'genres',
+          localField: 'genre',
+          foreignField: '_id',
+          as: 'genre',
+        },
+      },
+      {
+        $unwind: '$genre',
+      },
+    ];
+
+    // Filter by author name
+    if (author) {
+      matchStage['author.fullName'] = {
+        $regex: new RegExp(author as string, 'i'),
+      };
+    }
+
+    // Filter by genre name
+    if (genre) {
+      matchStage['genre.name'] = {
+        $regex: new RegExp(genre as string, 'i'),
+      };
+    }
+
+    if (Object.keys(matchStage).length > 0) {
+      pipeline.push({ $match: matchStage });
+    }
+
+    if (Object.keys(sortStage).length > 0) {
+      pipeline.push({ $sort: sortStage });
+    }
+
+    const books = await Book.aggregate(pipeline);
+
     res.status(200).json({
-      message: 'Books Retrieved Successful',
-      books: books,
-      count: books.length
+      message: 'Books Retrieved Successfully',
+      books,
+      count: books.length,
     });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 export const createBook = async (
   req: Request,

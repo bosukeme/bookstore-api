@@ -11,7 +11,8 @@ export const getAllGenres = async (
     const genres = await Genre.find({});
     res.status(200).json({
       message: 'Genres Retrived Successfully',
-      genres: genres,
+      genres,
+      count: genres.length
     });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
