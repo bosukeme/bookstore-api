@@ -67,7 +67,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
             {id: existingUser._id, username: existingUser.username},
             process.env.JWT_SECRET as string,
             { 
-                expiresIn: parseInt(process.env.JWT_EXPIRES_IN as string)  || 600, 
+                expiresIn: parseInt(process.env.JWT_EXPIRES_IN as string)  || 3600, 
             }   
         );
 
@@ -140,7 +140,7 @@ export const refreshToken = async (req: Request, res: Response, next: NextFuncti
           { id, username },
           process.env.JWT_SECRET,
           {
-            expiresIn: parseInt(process.env.JWT_EXPIRES_IN as string) || 600,
+            expiresIn: parseInt(process.env.JWT_EXPIRES_IN as string) || 3600,
           },
         );
 

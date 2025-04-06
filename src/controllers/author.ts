@@ -25,14 +25,15 @@ export const createAuthor = async (
 ) => {
   try {
     const { firstName, lastName, image, nationality } = req.body;
-    const existingAuthor = await Author.findOne({ firstName });
+    const fullName = `${firstName} ${lastName}`;
+    const existingAuthor = await Author.findOne({ fullName });
 
     if (existingAuthor) {
       res.status(400).json({ error: 'Author Already Exist' });
       return;
     }
 
-    const author = new Author({ firstName, lastName, image, nationality });
+    const author = new Author({ firstName, lastName, fullName, image, nationality });
     await author.save();
 
     res.status(201).json({ message: 'Author created sucessfully', author });

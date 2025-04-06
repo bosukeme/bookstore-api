@@ -11,11 +11,13 @@ const BookSchema: Schema = new Schema(
       unique: true,
     },
     author: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Author',
       required: true,
     },
     genre: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Genre',
     },
     yearPub: {
       type: String,

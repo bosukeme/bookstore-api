@@ -22,7 +22,10 @@ export const getAllBooks = async (
       sort[sortBy as string] = order;
     }
 
-    const books = await Book.find(filter).sort(sort);
+    const books = await Book.find(filter)
+      .sort(sort)
+      .populate('author')
+      .populate('genre');
     res.status(200).json({
       message: 'Books Retrieved Successful',
       books: books,
@@ -64,7 +67,9 @@ export const getBook = async (
 ) => {
   try {
     const { bookId } = req.params;
-    const book = await Book.findById(bookId);
+    const book = await Book.findById(bookId)
+      .populate('author')
+      .populate('genre');
 
     if (!book) {
       res.status(404).json({ error: 'Book ID does not exist' });

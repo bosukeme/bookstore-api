@@ -13,6 +13,9 @@ const AuthorSchema: Schema = new Schema(
       type: String,
       required: true,
     },
+    fullName: {
+      type: String,
+    },
     image: {
       type: String,
     },

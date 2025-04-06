@@ -42,12 +42,15 @@ describe('Author Endpoints', () => {
     });
 
     it('should return 400 if author already exists', async () => {
-          await Author.create({ firstName: 'Test Author', lastName: 'Paul' });
+        const firstName = 'Test Author';
+        const lastName =  'Paul';
+        const fullName = `${firstName} ${lastName}`;
+          await Author.create({ firstName, lastName, fullName });
     
           const res = await request(app)
             .post('/api/authors')
             .set('Authorization', `Bearer ${token}`)
-            .send({ firstName: 'Test Author', lastName: 'Paul' });
+            .send({ firstName, lastName, fullName });
           expect(res.status).toBe(400);
           expect(res.body.error).toBe('Author Already Exist');
         });

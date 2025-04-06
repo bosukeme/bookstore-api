@@ -161,7 +161,7 @@ A simple RESTful API for managing books, authors, and genres with user authentic
     PORT=3000
     NODE_ENV=development 
     JWT_SECRET=your-jwt-secret-key
-    JWT_EXPIRES_IN=600
+    JWT_EXPIRES_IN=3600
     ```
 4. Run the server:
     ```bash
