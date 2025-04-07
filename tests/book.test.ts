@@ -35,7 +35,6 @@ describe('Book Endpoints', () => {
         author: '67f1b6a160b6731321647600',
         genre: '67f1b68a60b67313216475fd',
       });
-      console.log(res.body.error);
       
     expect(res.status).toBe(201);
     expect(res.body.book.title).toBe('Test Book');
@@ -50,5 +49,4 @@ describe('Book Endpoints', () => {
     expect(Array.isArray(res.body.books)).toBe(true);
   });
 
-  // Add more tests like get by id, update, delete...
 });

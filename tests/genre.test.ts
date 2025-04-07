@@ -47,6 +47,19 @@ describe('Genre Endpoints', () => {
       expect(res.status).toBe(400);
       expect(res.body.error).toBe('Genre Already Exist');
     });
+
+    it('should return 500 if there is an error creating a genres', async () => {
+      jest
+        .spyOn(Genre, 'findOne')
+        .mockRejectedValueOnce(new Error('Database Error'));
+
+      const res = await request(app)
+        .post(`/api/genres/`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({name: "Sci-Fi"});
+      expect(res.status).toBe(500);
+      expect(res.body.error).toBe('Database Error');
+    });
   });
 
   describe('GET /api/genres', () => {
@@ -69,6 +82,19 @@ describe('Genre Endpoints', () => {
       expect(res.status).toBe(200);
       expect(res.body.genres.length).toBe(1);
     });
+
+    it('should return 500 if there is an error retrieving genres', async () => {
+  
+      jest
+        .spyOn(Genre, 'find')
+        .mockRejectedValueOnce(new Error('Database Error'));
+
+      const res = await request(app)
+        .get(`/api/genres/`)
+        .set('Authorization', `Bearer ${token}`);
+      expect(res.status).toBe(500);
+      expect(res.body.error).toBe('Database Error');
+    });
   });
 
   describe('GET /api/genres/:id', () => {
@@ -89,6 +115,20 @@ describe('Genre Endpoints', () => {
         .set('Authorization', `Bearer ${token}`);
 
       expect(res.status).toBe(404);
+    });
+
+    it('should return 500 if there is an error retrieving a genre', async () => {
+      const genre = await Genre.create({ name: 'Comedy' });
+
+      jest
+        .spyOn(Genre, 'findById')
+        .mockRejectedValueOnce(new Error('Database Error'));
+
+      const res = await request(app)
+        .get(`/api/genres/${genre._id}`)
+        .set('Authorization', `Bearer ${token}`);
+      expect(res.status).toBe(500);
+      expect(res.body.error).toBe('Database Error');
     });
   });
 
@@ -113,6 +153,22 @@ describe('Genre Endpoints', () => {
 
       expect(res.status).toBe(404);
     });
+
+    it('should return 500 if there is an error updating a genre', async () => {
+      const genre = await Genre.create({ name: 'Comedy' });
+
+      jest
+        .spyOn(Genre, 'findByIdAndUpdate')
+        .mockRejectedValueOnce(new Error('Database Error'));
+
+      const res = await request(app)
+        .put(`/api/genres/${genre._id}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send({name:"Fantasy"});
+      expect(res.status).toBe(500);
+      expect(res.body.error).toBe('Database Error');
+    });
+
   });
 
   describe('DELETE /api/genres/:id', () => {
@@ -134,5 +190,20 @@ describe('Genre Endpoints', () => {
 
       expect(res.status).toBe(404);
     });
+    
+    it('should return 500 if there is an error deleting a genre', async () => {
+          const genre = await Genre.create({ name: 'Comedy' });
+    
+          jest
+            .spyOn(Genre, 'findByIdAndDelete')
+            .mockRejectedValueOnce(new Error('Database Error'));
+    
+          const res = await request(app)
+            .delete(`/api/genres/${genre._id}`)
+            .set('Authorization', `Bearer ${token}`);
+          expect(res.status).toBe(500);
+          expect(res.body.error).toBe('Database Error');
+        });
+
   });
 });

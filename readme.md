@@ -16,6 +16,7 @@ A simple RESTful API for managing books, authors, and genres with user authentic
 ### Authentication
 
 - **POST /api/register**: Register a new user
+
   - Request Body: `{ "username": "user", "password": "password" }`
   - Response: `{ "message": "User registered successfully" }`
 
@@ -26,35 +27,39 @@ A simple RESTful API for managing books, authors, and genres with user authentic
 ### Book Management
 
 - **GET /api/books**: Get all books
+
   - Query Params: `?title={title}&author={author}&genre={genre}` (optional filtering)
-  - Response: 
+  - Response:
     ```json
-    [ 
-      { 
-        "id": "bookId", 
-        "title": "Book Title", 
-        "author": "Author Name", 
-        "genre": "Genre Name" 
-      } 
+    [
+      {
+        "id": "bookId",
+        "title": "Book Title",
+        "author": "Author Name",
+        "genre": "Genre Name"
+      }
     ]
     ```
 
 - **POST /api/books**: Create a new book
+
   - Request Body: `{ "title": "Book Title", "authorId": "authorId", "genreId": "genreId" }`
   - Response: `{ "message": "Book created successfully" }`
 
 - **GET /api/books/{bookId}**: Get book by ID
-  - Response: 
+
+  - Response:
     ```json
-    { 
-      "id": "bookId", 
-      "title": "Book Title", 
-      "author": "Author Name", 
-      "genre": "Genre Name" 
+    {
+      "id": "bookId",
+      "title": "Book Title",
+      "author": "Author Name",
+      "genre": "Genre Name"
     }
     ```
 
 - **PUT /api/books/{bookId}**: Update a book
+
   - Request Body: `{ "title": "Updated Title", "authorId": "authorId", "genreId": "genreId" }`
   - Response: `{ "message": "Book updated successfully" }`
 
@@ -64,30 +69,34 @@ A simple RESTful API for managing books, authors, and genres with user authentic
 ### Author Management
 
 - **GET /api/authors**: Get all authors
+
   - Response:
     ```json
-    [ 
-      { 
-        "id": "authorId", 
-        "name": "Author Name" 
-      } 
+    [
+      {
+        "id": "authorId",
+        "name": "Author Name"
+      }
     ]
     ```
 
 - **POST /api/authors**: Create a new author
+
   - Request Body: `{ "name": "Author Name" }`
   - Response: `{ "message": "Author created successfully" }`
 
 - **GET /api/authors/{authorId}**: Get author by ID
+
   - Response:
     ```json
-    { 
-      "id": "authorId", 
-      "name": "Author Name" 
+    {
+      "id": "authorId",
+      "name": "Author Name"
     }
     ```
 
 - **PUT /api/authors/{authorId}**: Update an author
+
   - Request Body: `{ "name": "Updated Author Name" }`
   - Response: `{ "message": "Author updated successfully" }`
 
@@ -97,30 +106,34 @@ A simple RESTful API for managing books, authors, and genres with user authentic
 ### Genre Management
 
 - **GET /api/genres**: Get all genres
+
   - Response:
     ```json
-    [ 
-      { 
-        "id": "genreId", 
-        "name": "Genre Name" 
-      } 
+    [
+      {
+        "id": "genreId",
+        "name": "Genre Name"
+      }
     ]
     ```
 
 - **POST /api/genres**: Create a new genre
+
   - Request Body: `{ "name": "Genre Name" }`
   - Response: `{ "message": "Genre created successfully" }`
 
 - **GET /api/genres/{genreId}**: Get genre by ID
+
   - Response:
     ```json
-    { 
-      "id": "genreId", 
-      "name": "Genre Name" 
+    {
+      "id": "genreId",
+      "name": "Genre Name"
     }
     ```
 
 - **PUT /api/genres/{genreId}**: Update a genre
+
   - Request Body: `{ "name": "Updated Genre Name" }`
   - Response: `{ "message": "Genre updated successfully" }`
 
@@ -151,24 +164,24 @@ A simple RESTful API for managing books, authors, and genres with user authentic
    ```
 
 2. Install dependencies:
-    ```bash
-    npm install
-    ```
+
+   ```bash
+   npm install
+   ```
 
 3. Set up your MongoDB connection in `.env`:
-    ```bash
-    MONGO_URI=mongodb://localhost:27017/bookstore
-    PORT=3000
-    NODE_ENV=development 
-    JWT_SECRET=your-jwt-secret-key
-    JWT_EXPIRES_IN=3600
-    ```
+   ```bash
+   MONGO_URI=mongodb://localhost:27017/bookstore
+   PORT=3000
+   NODE_ENV=development
+   JWT_SECRET=your-jwt-secret-key
+   JWT_EXPIRES_IN=3600
+   ```
 4. Run the server:
-    ```bash
-    npm start
-    ```
-    The API will be running at http://localhost:3000
-
+   ```bash
+   npm start
+   ```
+   The API will be running at http://localhost:3000
 
 ### Running Docker
 
@@ -178,7 +191,8 @@ Navigate to the root directory
 docker-compose up --build
 ```
 
-### visit 
+### visit
+
 ```bash
 http://localhost:3000/
 ```
@@ -190,28 +204,29 @@ docker-compose stop
 ```
 
 ## Run Tests
+
 ```bash
 npm test
 ```
 
-
 ## Testing
--  You can use Postman to test the API.
-- Import the provided Postman collection to quickly get started with testing the API endpoints.
-- <a href="https://universal-eclipse-789093.postman.co/workspace/Tut~3b57b19b-0969-4c17-9493-1b51587c990d/collection/8343801-02b66011-af4f-484f-8e56-8c616aaa624a?action=share&creator=8343801&active-environment=8343801-c29dabec-62f9-4a45-810e-ba39c3eece1e" target="_blank">  Postman Collection URL </a>
 
+- You can use Postman to test the API.
+- Import the provided Postman collection to quickly get started with testing the API endpoints.
+- <a href="https://documenter.getpostman.com/view/8343801/2sB2cVdgUR" target="_blank"> Postman Collection URL </a>
 
 ## Contributing
+
 If you would like to contribute, please follow these steps:
 
 - Fork the repository.
 - Create a new branch for your feature or bugfix.
 - Submit a pull request.
 
-
 ## Authors
 
 Ukeme Wilson
+
 - <a href="https://www.linkedin.com/in/ukeme-wilson-4825a383/">Linkedin</a>.
 - <a href="https://medium.com/@ukemeboswilson">Medium</a>.
 - <a href="https://www.ukemewilson.sbs/">Website</a>.
