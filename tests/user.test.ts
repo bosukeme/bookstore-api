@@ -34,6 +34,18 @@ describe("Auth Routes", () => {
           expect(res.statusCode).toBe(400);
           expect(res.body).toHaveProperty('error', 'Email already in use');
         });
+
+        it('should return 500 if an internal error occurs', async () => {
+          const mockError = new Error('Something went wrong');
+          jest.spyOn(User, 'findOne').mockImplementationOnce(() => {
+            throw mockError;
+          });
+
+          const res = await request(app).post('/api/register').send(userData);
+
+          expect(res.status).toBe(500);
+          expect(res.body).toHaveProperty('error', 'Something went wrong');
+        });
     });
 
     describe('POST /login', () => {
@@ -74,5 +86,20 @@ describe("Auth Routes", () => {
           'Invalid Username or Password',
         );
       });
+
+       it('should return 500 if an internal error occurs', async () => {
+         const mockError = new Error('Something went wrong');
+         jest.spyOn(User, 'findOne').mockImplementationOnce(() => {
+           throw mockError;
+         });
+
+         const res = await request(app).post('/api/login').send({
+           username: 'testuser',
+           password: 'password123',
+         });
+
+         expect(res.status).toBe(500);
+         expect(res.body).toHaveProperty('error', 'Something went wrong');
+       });
     });
 })
