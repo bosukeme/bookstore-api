@@ -284,13 +284,7 @@ describe('Book Endpoints', () => {
     });
 
     it('should return 404 for non-existing ID', async () => {
-      const bookData = {
-        title: 'Test Book',
-        author: '67f1b6a160b6731321647600',
-        genre: '67f1b68a60b67313216475fd',
-        pubYear: '2000',
-        image: 'localhost.png',
-      };
+      
       const res = await request(app)
         .put(`/api/books/${new mongoose.Types.ObjectId()}`)
         .set('Authorization', `Bearer ${token}`)

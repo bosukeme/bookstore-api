@@ -16,7 +16,7 @@ export const authenticateUser = (req: IAuthRequest, res: Response, next: NextFun
         const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as IUser;
         req.user = decoded;
         next();
-    } catch (error) {
-        res.status(401).json({ error: "Invalid or Expired Token" });
+    } catch (error: any) {
+        res.status(401).json({ error: `Invalid or Expired Token: ${error}` });
     }
 }
