@@ -26,6 +26,10 @@ jobs:
     - name: Install dependencies
       run: npm ci
     
+    - name: Debugging Information
+      run: |
+        echo "JWT_SECRET is set to: $JWT_SECRET"
+    
     - name: Compile Typescript
       run: npm run build
 
