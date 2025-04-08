@@ -8,22 +8,21 @@ import {
 } from '../controllers/genre';
 
 import { validateObjectId } from '../middlewares/validateObjectId';
-import { authenticateUser } from '../middlewares/authMiddleware';
 
 const router = Router();
 
-router.get('/', authenticateUser, getAllGenres);
-router.post('/', authenticateUser, createGenre);
-router.get('/:genreId', authenticateUser, validateObjectId('genreId'), getGenre);
+router.get('/', getAllGenres);
+router.post('/', createGenre);
+router.get('/:genreId', validateObjectId('genreId'), getGenre);
 router.put(
   '/:genreId',
-  authenticateUser,
+
   validateObjectId('genreId'),
   updateGenre,
 );
 router.delete(
   '/:genreId',
-  authenticateUser,
+
   validateObjectId('genreId'),
   deleteGenre,
 );

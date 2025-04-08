@@ -45,8 +45,8 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
     
     try {
         const {username, password} = req.body;
-    
-        const existingUser = await User.findOne({username});
+        
+        const existingUser = await User.findOne({username});    
     
         if (!existingUser) {
             res.status(404).json({error: "Invalid Username or Password"})
@@ -70,21 +70,21 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
             }   
         );
 
-        const refreshToken = jwt.sign(
-          { id: existingUser._id, username: existingUser.username },
-          process.env.JWT_REFRESH_SECRET as string,
-          {
-            expiresIn:
-              parseInt(process.env.JWT_REFRESH_EXPIRES_IN as string) ||
-              7 * 24 * 60 * 60
-          },
-        );
+        // const refreshToken = jwt.sign(
+        //   { id: existingUser._id, username: existingUser.username },
+        //   process.env.JWT_REFRESH_SECRET as string,
+        //   {
+        //     expiresIn:
+        //       parseInt(process.env.JWT_REFRESH_EXPIRES_IN as string) ||
+        //       7 * 24 * 60 * 60
+        //   },
+        // );
 
-        await User.findByIdAndUpdate(
-          existingUser._id,
-          { token, refreshToken },
-          { new: true, runValidators: true },
-        );
+        // await User.findByIdAndUpdate(
+        //   existingUser._id,
+        //   { token, refreshToken },
+        //   { new: true, runValidators: true },
+        // );
         
         res.status(200).json({
           message: 'Login Successful',

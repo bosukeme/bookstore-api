@@ -94,7 +94,9 @@ describe('Author Endpoints', () => {
     });
 
     it('should return 500 if there is an error retrieving authors', async () => {
-      jest.spyOn(Author, 'find').mockRejectedValueOnce(new Error('Database Error'));
+      jest
+        .spyOn(Author, 'find')
+        .mockRejectedValueOnce(new Error('Database Error'));
       const res = await request(app)
         .get('/api/authors')
         .set('Authorization', `Bearer ${token}`);
@@ -131,13 +133,13 @@ describe('Author Endpoints', () => {
       const lastName = 'Author';
       const fullName = `${firstName} ${lastName}`;
       const author = await Author.create({ firstName, lastName, fullName });
-      
+
       jest
         .spyOn(Author, 'findOne')
         .mockRejectedValueOnce(new Error('Database Error'));
 
 
-      const res = await request(app)
+        const res = await request(app)
         .get(`/api/authors/${author._id}`)
         .set('Authorization', `Bearer ${token}`);
       expect(res.status).toBe(500);
