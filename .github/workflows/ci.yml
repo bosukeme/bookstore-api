@@ -21,7 +21,13 @@ jobs:
         node-version: 18
     
     - name: Install dependencies
-      run: npm ci 
+      run: npm ci
+    
+    - name: Debugging Information
+      run: |
+        node -v
+        npm -v
+        ls -R
 
     - name: Compile Typescript
       run: npm run build
