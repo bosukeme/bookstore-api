@@ -17,6 +17,6 @@ export const authenticateUser = (req: IAuthRequest, res: Response, next: NextFun
         req.user = decoded;
         next();
     } catch (error: any) {
-        res.status(401).json({ error: `Invalid or Expired Token: ${error}` });
+        res.status(401).json({ error: `Invalid or Expired Token` });
     }
 }
